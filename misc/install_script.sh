@@ -1,7 +1,8 @@
 #!/bin/sh
 
-pacman -Syu
+pacman -Sy
 pacman-key --refresh-keys
+pacman -Syu
 
 useradd -m -G wheel -s /bin/zsh alex
 passwd alex
