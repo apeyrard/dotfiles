@@ -28,7 +28,7 @@ bspc config presel_feedback_color \#aaaaaa
 
 xsetroot -cursor_name left_ptr
 
-feh --bg-scale ~/pictures/background.png
+feh --bg-scale ~/dotfiles/misc/background.png
 compton --config ~/.config/compton/compton.conf -b
 
 $HOME/.config/polybar/launch.sh
