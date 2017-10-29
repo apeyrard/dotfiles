@@ -1,0 +1,465 @@
+[colors]
+background = #cc0c0d0e
+foreground = #b7b8b9
+black = ${colors.background}
+white = ${colors.foreground}
+transparent = #00ffffff
+red = #e31a1c
+green = #31a354
+blue = #3182bd
+purple = #756bb1
+orange = #de935f
+yellow = #d7a645
+
+[bar/master]
+
+tray-position = right
+tray-padding = 2
+tray-background = #66333333
+
+wm-restack = bspwm
+
+width = 100%
+height = 30
+separator = " "
+background = ${colors.background}
+foreground = ${colors.foreground}
+underline-size = 3
+overline-size = 3
+font-0 = Noto Sans:pixelsize=13;0
+font-1 = FontAwesome:size=10;-2
+font-2 = siji:pixelsize=10;0
+
+[bar/top]
+inherit = bar/master
+
+modules-left = wifi up-speed down-speed pkg
+modules-center = xwindow
+modules-right = mpd volume backlight powermenu
+
+
+; MODULES
+
+[module/network]
+type = internal/network
+interface = wlan0
+interval = 3.0
+
+format-connected-padding = 1
+label-connected-padding-left = 1
+
+accumulate-stats = true
+
+[module/wifi]
+inherit = module/network
+
+format-connected-foreground = ${colors.green}
+format-connected-underline = ${colors.green}
+
+label-connected = %{A:qterminal -e "sudo wifi-menu":}%{A}
+label-connected-padding-left = 0
+
+format-disconnected-padding = 1
+format-disconnected-underline = ${colors.yellow}
+format-disconnected-foreground = ${colors.yellow}
+
+label-disconnected = %{A:qterminal -e "sudo wifi-menu":}%{A}
+
+[module/up-speed]
+inherit = module/network
+
+format-connected-prefix = 
+format-connected-prefix-foreground = ${colors.blue}
+format-connected-underline = ${colors.blue}
+
+label-connected = %upspeed%
+
+[module/down-speed]
+inherit = module/network
+
+format-connected-prefix = 
+format-connected-prefix-foreground = ${colors.green}
+format-connected-underline = ${colors.green}
+
+label-connected = %downspeed%
+
+[module/pkg]
+type = custom/script
+interval = 900
+format = <label>
+format-underline = #dc322f
+label = "%output:0:0%"
+exec = .config/polybar/pkg.sh
+exec-if = "ping -q -w 2 -c 1 8.8.8.8 > /dev/null"
+
+[module/bspwm]
+type = internal/bspwm
+
+ws-icon-0 = web;
+ws-icon-1 = term;
+ws-icon-2 = chat;
+ws-icon-3 = code;
+ws-icon-4 = music;
+ws-icon-default = 
+
+format = <label-state> <label-mode>
+
+label-focused = %icon%
+label-focused-background = #88000000
+label-focused-overline= #ddd
+label-focused-padding = 4
+
+label-occupied = %icon%
+label-occupied-padding = 4
+
+label-urgent = %icon%
+label-urgent-padding = 4
+
+label-empty = %icon%
+label-empty-foreground = #44ffffff
+label-empty-padding = 4
+
+[module/xwindow]
+type = internal/xwindow
+label = %title%
+label-maxlen = 50
+
+[module/backlight]
+type = internal/xbacklight
+output = eDP1
+
+format-prefix = 
+format-prefix-foreground = ${colors.yellow}
+format-padding = 1
+format-underline = ${colors.yellow}
+label = %percentage%%
+label-padding-left = 1
+
+scroll-up = light -A 10
+scroll-down = light -U 10
+
+[bar/bottom]
+inherit = bar/master
+
+bottom = true
+
+modules-left = cpu ram battery
+modules-center = bspwm
+modules-right = home root date
+
+[module/cpu]
+type = internal/cpu
+interval = 0.5
+
+format-prefix = 
+format-prefix-foreground = ${colors.green}
+format-overline = ${colors.green}
+format-padding = 1
+
+label = %{A:qterminal -e "htop":}%percentage:2%%%{A}
+label-padding-left = 1
+
+[module/ram]
+type = internal/memory
+interval = 3
+
+format-prefix = 
+format-prefix-foreground = ${colors.blue}
+format-overline = ${colors.blue}
+format-padding = 1
+
+label = %{A:qterminal -e "htop":}%percentage_used:2%%%{A}
+label-padding-left = 1
+
+[module/date]
+type = internal/date
+interval = 1.0
+date = %a %b %d, 
+time = %H:%M
+date-alt = %A, %d %B %Y
+time-alt = %H:%M:%S
+label = %date% %time%
+format =    <label>
+format-prefix-foreground = ${colors.purple}
+format-overline = ${colors.purple}
+
+[module/battery]
+type = internal/battery
+full-at = 98
+battery = BATC
+adapter = AC0
+
+poll-interval = 5
+
+time-format = %H:%M
+format-charging = <animation-charging>  <label-charging>
+format-charging-padding = 1
+format-charging-overline = ${colors.green}
+format-charging-foreground = ${colors.green}
+
+format-discharging = <ramp-capacity>  <label-discharging>
+format-full-overline = ${colors.green}
+format-full-padding = 1
+
+label-charging = %{F#b7b8b9}%percentage:2%%%{F-} %time%
+label-discharging = %percentage:2%% %time% %{o- -o}
+label-full = %{F#31a354}%{F-} %percentage%% %{F#d7a645}%{F-}
+
+ramp-capacity-0 = %{F#e31a1c o#e31a1c +o} %{F-}
+ramp-capacity-1 = %{F#e31a1c o#e31a1c +o} %{F-}
+ramp-capacity-2 = %{F#d7a645 o#d7a645 +o} %{F-}
+ramp-capacity-3 = %{F#31a354 o#31a354 +o} %{F-}
+ramp-capacity-4 = %{F#31a354 o#31a354 +o} %{F-}
+
+animation-charging-0 = 
+animation-charging-1 = 
+animation-charging-2 = 
+animation-charging-3 = 
+animation-charging-4 = 
+
+[module/volume]
+type = internal/volume
+
+master-soundcard = default
+speaker-soundcard = default
+headphone-soundcard = default
+
+master-mixer = Speaker
+;speaker-mixer = Speaker
+;headphone-mixer = Headphone
+
+format-volume = <ramp-volume>  <label-volume>
+format-muted = <label-muted>
+label-volume = %percentage%
+label-muted =   muted
+label-muted-foreground = #aaa
+format-volume-padding = 3
+format-muted-padding = 3
+
+ramp-volume-0 = 
+ramp-volume-1 = 
+ramp-volume-2 = 
+ramp-headphones-0 = 
+
+[module/home]
+type = internal/fs
+interval = 3600
+mount-0 = /home
+
+format-mounted-overline = ${colors.blue}
+format-mounted-padding = 1
+format-mounted-prefix = 
+format-mounted-prefix-foreground = ${colors.blue}
+label-mounted = %{A:qterminal -e "ranger":}%percentage_free%%%{A}
+label-mounted-padding-left = 1
+
+[module/root]
+type = internal/fs
+interval = 3600
+mount-0 = /
+
+format-mounted-overline = ${colors.orange}
+format-mounted-padding = 1
+format-mounted-prefix = 
+format-mounted-prefix-foreground = ${colors.orange}
+label-mounted = %{A:qterminal -e "df -h &":}%percentage_free%%%{A}
+label-mounted-padding-left = 1
+
+
+[module/powermenu]
+type = custom/menu
+
+label-open =   
+;label-open-background = #dd0000
+;label-open-foreground = #fff
+label-close = cancel
+;label-close-background = #dd0000
+;label-close-foreground = #fff
+label-open-padding = 4 
+label-close-padding = 3 
+
+menu-0-0 = reboot
+menu-0-0-exec = menu-open-1
+menu-0-1 = power off
+menu-0-1-exec = menu-open-2
+menu-0-0-padding = 3
+menu-0-1-padding = 3
+
+menu-1-0 = reboot?  
+menu-1-0-exec = sudo reboot
+menu-1-0-padding = 3
+
+menu-2-0 = power off?  
+menu-2-0-exec = sudo poweroff
+menu-2-0-padding = 3
+
+[module/mpd]
+type = internal/mpd
+
+host = 127.0.0.1
+port = 6600
+password = 
+
+; Seconds to sleep between progressbar/song timer sync
+; Default: 1
+interval = 2
+
+; Available tags:
+;   <label-song> (default)
+;   <label-time>
+;   <bar-progress>
+;   <toggle> - gets replaced with <icon-(pause|play)>
+;   <toggle-stop> - gets replaced with <icon-(stop|play)>
+;   <icon-random>
+;   <icon-repeat>
+;   <icon-repeatone>
+;   <icon-prev>
+;   <icon-stop>
+;   <icon-play>
+;   <icon-pause>
+;   <icon-next>
+;   <icon-seekb>
+;   <icon-seekf>
+format-online =    <label-song>
+
+; Available tokens:
+;   %artist%
+;   %album%
+;   %date%
+;   %title%
+; Default: %artist% - %title%
+label-song = %title%
+format-online-padding = 3
+;[module/mpd]
+;type = internal/mpd
+;format-online = <label-song>  <icon-prev> <icon-stop> <toggle> <icon-next>
+;
+;icon-prev = 
+;icon-stop = 
+;icon-play = 
+;icon-pause = 
+;icon-next = 
+;
+;label-song-maxlen = 25
+;label-song-ellipsis = true
+;
+;
+;[module/wlan]
+;type = internal/network
+;interface = 
+;interval = 3.0
+;
+;format-connected = <ramp-signal> <label-connected>
+;format-connected-underline = #9f78e1
+;label-connected = %essid%
+;
+;format-disconnected =
+;;format-disconnected = <label-disconnected>
+;;format-disconnected-underline = ${self.format-connected-underline}
+;;label-disconnected = %ifname% disconnected
+;;label-disconnected-foreground = ${colors.foreground-alt}
+;
+;ramp-signal-0 = 
+;ramp-signal-1 = 
+;ramp-signal-2 = 
+;ramp-signal-3 = 
+;ramp-signal-4 = 
+;ramp-signal-foreground = ${colors.foreground-alt}
+;
+;[module/eth]
+;type = internal/network
+;interface = 
+;interval = 3.0
+;
+;format-connected-underline = #55aa55
+;format-connected-prefix = " "
+;format-connected-prefix-foreground = ${colors.foreground-alt}
+;label-connected = %local_ip%
+;
+;format-disconnected =
+;;format-disconnected = <label-disconnected>
+;;format-disconnected-underline = ${self.format-connected-underline}
+;;label-disconnected = %ifname% disconnected
+;;label-disconnected-foreground = ${colors.foreground-alt}
+;
+;
+;[module/volume]
+;type = internal/volume
+;
+;format-volume = <label-volume> <bar-volume>
+;label-volume = VOL
+;label-volume-foreground = ${root.foreground}
+;
+;format-muted-prefix = " "
+;format-muted-foreground = ${colors.foreground-alt}
+;label-muted = sound muted
+;
+;bar-volume-width = 10
+;bar-volume-foreground-0 = #55aa55
+;bar-volume-foreground-1 = #55aa55
+;bar-volume-foreground-2 = #55aa55
+;bar-volume-foreground-3 = #55aa55
+;bar-volume-foreground-4 = #55aa55
+;bar-volume-foreground-5 = #f5a70a
+;bar-volume-foreground-6 = #ff5555
+;bar-volume-gradient = false
+;bar-volume-indicator = |
+;bar-volume-indicator-font = 2
+;bar-volume-fill = ─
+;bar-volume-fill-font = 2
+;bar-volume-empty = ─
+;bar-volume-empty-font = 2
+;bar-volume-empty-foreground = ${colors.foreground-alt}
+;
+;[module/temperature]
+;type = internal/temperature
+;thermal-zone = 0
+;warn-temperature = 60
+;
+;format = <ramp> <label>
+;format-underline = #f50a4d
+;format-warn = <ramp> <label-warn>
+;format-warn-underline = ${self.format-underline}
+;
+;label = %temperature%
+;label-warn = %temperature%
+;label-warn-foreground = ${colors.secondary}
+;
+;ramp-0 = 
+;ramp-1 = 
+;ramp-2 = 
+;ramp-foreground = ${colors.foreground-alt}
+;
+;[module/powermenu]
+;type = custom/menu
+;
+;format-spacing = 1
+;
+;label-open = 
+;label-open-foreground = ${colors.secondary}
+;label-close =  cancel
+;label-close-foreground = ${colors.secondary}
+;label-separator = |
+;label-separator-foreground = ${colors.foreground-alt}
+;
+;menu-0-0 = reboot
+;menu-0-0-exec = menu-open-1
+;menu-0-1 = power off
+;menu-0-1-exec = menu-open-2
+;
+;menu-1-0 = cancel
+;menu-1-0-exec = menu-open-0
+;menu-1-1 = reboot
+;menu-1-1-exec = sudo reboot
+;
+;menu-2-0 = power off
+;menu-2-0-exec = sudo poweroff
+;menu-2-1 = cancel
+;menu-2-1-exec = menu-open-0
+;
+;[settings]
+;screenchange-reload = true
+;;compositing-background = xor
+;;compositing-background = screen
+;;compositing-foreground = source
+;;compositing-border = over
