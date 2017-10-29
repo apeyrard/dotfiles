@@ -2,9 +2,10 @@
 
 pacman -Sy archlinux-keyring
 pacman -Syu
+pacman -S zsh
 
 # adding user
-useradd -m -G wheel -s /bin/bash alex
+useradd -m -G wheel -s /bin/zsh alex
 passwd alex
 
 echo "Add yourself to sudoers"
@@ -22,11 +23,11 @@ echo "Installing yaourt"
 pacman -Syu yaourt
 
 # cloning into dotfiles
-su alex
-cd
+cd /home/alex
 echo "cloning into dotfiles"
+su alex -c "git clone https://github.com/apeyrard/dotfiles.git"
 
 # linking config files
 
 # installing everything else
-yaourt -S zsh xorg-server xorg-xinit wget bspwm compton sxhkd qterminal deluge feh base-devel polybar universal-ctags-git tmux rofi rfkill openssh
+su alex -c "yaourt -S xorg-server xorg-xinit wget bspwm compton sxhkd qterminal deluge feh base-devel polybar universal-ctags-git tmux rofi rfkill openssh"
