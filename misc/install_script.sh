@@ -1,11 +1,13 @@
 #!/bin/sh
 
+pacman -Syu
+pacman-keys --refresh-keys
+
 useradd -m -G wheel -s /bin/zsh alex
+passwd alex
 
 echo "Add yourself to sudoers"
 visudo
-
-echo "Backing up pacman.conf"
 cp /etc/pacman.conf /etc/pacman.conf.back
 
 echo "Adding archlinuxfr"
