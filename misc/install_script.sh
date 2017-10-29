@@ -1,18 +1,23 @@
 #!/bin/sh
-pacman -S dialog
 
+useradd -m -G wheel -s /bin/zsh alex
 
+echo "Add yourself to sudoers"
+visudo
 
-DIALOG=${DIALOG=dialog}
+echo "Backing up pacman.conf"
+cp /etc/pacman.conf /etc/pacman.conf.back
 
-$DIALOG --title " Mon premier dialog" --clear \
-	--yesno "Bonjour, ceci est mon premier programme dialog" 10 30
+echo "Adding archlinuxfr"
+echo "[archlinuxfr]" >> /etc/pacman.conf
+echo "SigLevel = Never" >> /etc/pacman.conf
+echo "Server = http://repo.archlinux.fr/\$arch" >> /etc/pacman.conf
 
-case $? in
-	0)	echo "Oui choisi. ";;
-	1)	echo "Non choisi. ";;
-	255)	echo "Appuyé sur Echap. ";;
-esac
+echo "Installing yaourt"
+pacman -Syu yaourt
 
-echo "test"
+su alex
+cd
+echo "cloning into dotfiles"
 
+yaourt -S xorg-server xorg-xinit wget bspwm compton sxhkd qterminal deluge feh base-devel polybar universal-ctags-git tmux rofi rfkill openssh
