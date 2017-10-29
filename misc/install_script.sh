@@ -1,7 +1,7 @@
 #!/bin/sh
 
-pacman -Sy
-pacman-key --refresh-keys
+pacman-key --init
+pacman-key --populate archlinux
 pacman -Syu
 
 useradd -m -G wheel -s /bin/zsh alex
