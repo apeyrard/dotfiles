@@ -30,6 +30,7 @@ su alex -c "git clone https://github.com/apeyrard/dotfiles.git"
 # linking config files
 su alex -c "ln -s /home/alex/dotfiles /home/alex/.config"
 su alex -c "ln -s /home/alex/dotfiles/misc/.xinitrc /home/alex/.xinitrc"
+su alex -c "ln -s /home/alex/dotfiles/misc/.profile /home/alex/.profile"
 
 # installing everything else
 su alex -c "yaourt -S xorg-server xorg-xinit wget bspwm compton sxhkd qterminal deluge feh base-devel polybar universal-ctags-git tmux rofi rfkill openssh"
