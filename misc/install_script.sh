@@ -1,12 +1,6 @@
 #!/bin/sh
 
-rm -R /etc/pacman.d/gnupg
-rm -R /root/.gnupg
-dirmngr </dev/null
-
-pacman-key --init
-pacman-key --populate archlinux
-pacman-key --refresh-keys
+pacman -Sy archlinux-keyring
 
 pacman -Syu
 
