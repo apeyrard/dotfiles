@@ -1,7 +1,13 @@
 #!/bin/sh
 
+rm -R /etc/pacman.d/gnupg
+rm -R /root/.gnupg
+dirmngr </dev/null
+
 pacman-key --init
 pacman-key --populate archlinux
+pacman-key --refresh-keys
+
 pacman -Syu
 
 useradd -m -G wheel -s /bin/zsh alex
