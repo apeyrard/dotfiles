@@ -2,7 +2,7 @@
 
 pacman -Sy archlinux-keyring
 pacman -Syu
-pacman -S zsh
+pacman -S zsh git
 
 # adding user
 useradd -m -G wheel -s /bin/zsh alex
