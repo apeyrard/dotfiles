@@ -29,11 +29,14 @@ pacman -Syu yaourt
 cd /home/alex
 echo "cloning into dotfiles"
 su alex -c "git clone https://github.com/apeyrard/dotfiles.git"
+su alex -c "mv /home/alex/dotfiles/ /home/alex/.config/"
 
 # linking config files
-su alex -c "ln -s /home/alex/dotfiles /home/alex/.config"
-su alex -c "ln -s /home/alex/dotfiles/misc/.xinitrc /home/alex/.xinitrc"
-su alex -c "ln -s /home/alex/dotfiles/misc/.profile /home/alex/.profile"
+su alex -c "ln -s /home/alex/.config/misc/.xinitrc /home/alex/.xinitrc"
+su alex -c "ln -s /home/alex/.config/misc/.profile /home/alex/.profile"
+
+# installing polybar dependencies
+su alex -c "yaourt -S wireless_tools mpd libmpdclient alsa-lib"
 
 # installing everything else
 su alex -c "yaourt -S xorg-server xorg-xinit wget bspwm compton sxhkd qterminal deluge feh base-devel polybar universal-ctags-git tmux rofi rfkill openssh"
