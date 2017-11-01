@@ -1,5 +1,8 @@
 #!/bin/sh
 
+# useful if date might be wrong, like on virtual machines
+timedatectl set-ntp true
+
 pacman -Sy archlinux-keyring
 pacman -Syu
 pacman -S zsh git
