@@ -36,6 +36,7 @@ su alex -c "ln -s /home/alex/.config/misc/.xinitrc /home/alex/.xinitrc"
 su alex -c "ln -s /home/alex/.config/misc/.profile /home/alex/.profile"
 
 # installing polybar dependencies
+su alex -c "gpg --recv-keys --keyserver hkp://pgp.mit.edu 1EB2638FF56C0C53"
 su alex -c "yaourt -S wireless_tools mpd libmpdclient alsa-lib siji-git ttf-unifont cower"
 
 # installing everything else
