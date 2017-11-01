@@ -50,4 +50,4 @@ cd ..
 rm -rf fonts
 
 # installing everything else
-su alex -c "yaourt -S xorg-server xorg-xinit wget bspwm compton sxhkd qterminal deluge feh base-devel polybar universal-ctags-git tmux rofi rfkill openssh"
+su alex -c "yaourt -S xorg-server xorg-xinit wget bspwm compton sxhkd qterminal deluge feh base-devel polybar universal-ctags-git tmux rofi rfkill openssh otf-font-awesome"
