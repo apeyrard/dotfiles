@@ -36,7 +36,7 @@ su alex -c "ln -s /home/alex/.config/misc/.xinitrc /home/alex/.xinitrc"
 su alex -c "ln -s /home/alex/.config/misc/.profile /home/alex/.profile"
 
 # installing polybar dependencies
-su alex -c "yaourt -S wireless_tools mpd libmpdclient alsa-lib siji-git ttf-unifont"
+su alex -c "yaourt -S wireless_tools mpd libmpdclient alsa-lib siji-git ttf-unifont cower"
 
 # installing everything else
 su alex -c "yaourt -S xorg-server xorg-xinit wget bspwm compton sxhkd qterminal deluge feh base-devel polybar universal-ctags-git tmux rofi rfkill openssh"
